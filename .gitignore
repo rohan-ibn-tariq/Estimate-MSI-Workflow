@@ -1,0 +1,63 @@
+# ============================================
+# Estimate-MSI-Workflow - .gitignore
+# ============================================
+
+# ---------------------------------------------
+# Workflow outputs (main pipeline)
+# ---------------------------------------------
+results/
+resources/
+logs/
+benchmarks/
+.snakemake/
+
+# ---------------------------------------------
+# Test workflow outputs
+# ---------------------------------------------
+.test/results/
+.test/logs/
+.test/benchmarks/
+.test/.snakemake/
+
+# Test input data
+!.test/resources/samples/
+!.test/resources/samples/*.fastq.gz
+!.test/resources/reference/
+!.test/resources/reference/*.fa
+!.test/resources/reference/*.fai
+
+# Test structure files
+!.test/
+!.test/*/
+!.test/**/.gitkeep
+!.test/README.md
+!.test/*.sh
+
+# ---------------------------------------------
+# Conda environments
+# ---------------------------------------------
+.snakemake/conda/
+.conda/
+.mamba/
+
+# ---------------------------------------------
+# Python
+# ---------------------------------------------
+__pycache__/
+*.py[cod]
+*.so
+
+# ---------------------------------------------
+# Editors
+# ---------------------------------------------
+.vscode/
+.idea/
+*.swp
+*~
+
+# ---------------------------------------------
+# OS
+# ---------------------------------------------
+.DS_Store
+Thumbs.db
+Desktop.ini
