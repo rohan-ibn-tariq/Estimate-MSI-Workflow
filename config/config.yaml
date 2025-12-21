@@ -1,0 +1,70 @@
+# ============================================
+# Estimate-MSI-Workflow - Configuration
+# ============================================
+
+# ---------------------------------------------
+# Data Source Mode
+# ---------------------------------------------
+# "local"    - Use test data from .test/resources/
+# "download" - Download real data from ENA (uses samples.tsv URLs)
+data_source: "local"
+
+# ---------------------------------------------
+# Sample Selection
+# ---------------------------------------------
+# Which samples to process (from samples.tsv)
+# Options:
+#   - null: Process ALL samples in samples.tsv
+#   - ["sample1", "sample2"]: Process only specified samples
+samples_to_run: null
+
+# ---------------------------------------------
+# Reference Genome
+# ---------------------------------------------
+reference:
+  species: "homo_sapiens"
+  build: "GRCh38"
+  release: "112"
+
+# ---------------------------------------------
+# MSI Analysis Parameters
+# ---------------------------------------------
+msi:
+  # MSI-High threshold (percentage)
+  # Samples with MSI score >= this are classified as MSI-High
+  threshold: 3.5
+  
+  # PyTRF minimum repeats per motif length
+  # Format: [mono, di, tri, tetra, penta, hexa]
+  # Example: [5, 5, 5, 5, 5, 5] means:
+  #   - Mononucleotide repeats: >= 5 repeats (e.g., AAAAA)
+  #   - Dinucleotide repeats: >= 5 repeats (e.g., CAGCAGCAGCAGCAG)
+  #   - etc.
+  min_repeats: [5, 5, 5, 5, 5, 5]
+
+# ---------------------------------------------
+# Variant Calling
+# ---------------------------------------------
+varlociraptor:
+  # Scenario file for tumor-only calling
+  scenario: "config/scenario.yaml"
+
+# ---------------------------------------------
+# Computational Resources
+# ---------------------------------------------
+threads:
+  default: 4
+  alignment: 8
+  varlociraptor: 4
+  pytrf: 2
+
+# ---------------------------------------------
+# Local Testing Configuration
+# ---------------------------------------------
+local_testing:
+  # Enable test mode (uses .test/resources/)
+  enabled: true
+  
+  # Paths to test data
+  fastq_dir: ".test/resources/samples"
+  reference: ".test/resources/reference/chr22.fa"
