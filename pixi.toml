@@ -1,0 +1,24 @@
+# ============================================
+# Estimate-MSI-Workflow - Pixi Configuration
+# ============================================
+# Optional: For local development and testing
+# Cloud compute can run Snakemake directly without Pixi
+# ============================================
+
+[project]
+name = "estimate-msi-workflow"
+version = "0.1.0"
+description = "MSI detection workflow using Varlociraptor"
+authors = ["Muhammad Rohan Ali Asmat"]
+channels = ["conda-forge", "bioconda"]
+platforms = ["linux-64"]
+
+[dependencies]
+snakemake = ">=9.0,<10.0"
+samtools = ">=1.0,<2.0"
+python = ">=3.12,<4.0"
+
+[tasks]
+setup-test = "cd .test && bash generate_minimal_test_data.sh"
+clean = "rm -rf results/ logs/ benchmarks/ .snakemake/"
+clean-test = "rm -rf .test/results/ .test/logs/ .test/.snakemake/"
