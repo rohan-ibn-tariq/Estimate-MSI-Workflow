@@ -3,13 +3,6 @@
 # ============================================
 
 # ---------------------------------------------
-# Data Source Mode
-# ---------------------------------------------
-# "local"    - Use test data from .test/resources/
-# "download" - Download real data from ENA (uses samples.tsv URLs)
-data_source: "local"
-
-# ---------------------------------------------
 # Sample Selection
 # ---------------------------------------------
 # Which samples to process (from samples.tsv)
@@ -24,7 +17,12 @@ samples_to_run: null
 reference:
   species: "homo_sapiens"
   build: "GRCh38"
-  release: "112"
+  release: "115"
+
+  # Chromosome filter for testing
+  # "22" = chr22 only (fast testing)
+  # ""   = all chromosomes (production)
+  chromosome: "22"
 
 # ---------------------------------------------
 # MSI Analysis Parameters
@@ -57,14 +55,3 @@ threads:
   alignment: 8
   varlociraptor: 4
   pytrf: 2
-
-# ---------------------------------------------
-# Local Testing Configuration
-# ---------------------------------------------
-local_testing:
-  # Enable test mode (uses .test/resources/)
-  enabled: true
-  
-  # Paths to test data
-  fastq_dir: ".test/resources/samples"
-  reference: ".test/resources/reference/chr22.fa"
