@@ -14,7 +14,7 @@ samples_to_run: null
 # ---------------------------------------------
 # Reference Genome
 # ---------------------------------------------
-reference:
+ref:
   species: "homo_sapiens"
   build: "GRCh38"
   release: "115"
