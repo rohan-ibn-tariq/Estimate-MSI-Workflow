@@ -15,10 +15,7 @@ include: "rules/msi.smk"
 
 rule all:
     input:
-        "results/test.txt"
-
-rule test:
-    output:
-        "results/test.txt"
-    shell:
-        "echo 'Workflow loaded successfully!' > {output}"
+        "resources/genome.fasta",
+        "resources/genome.gtf",
+        "resources/genome.fasta.fai",
+        multiext("resources/genome.fasta", ".amb", ".ann", ".bwt", ".pac", ".sa")
