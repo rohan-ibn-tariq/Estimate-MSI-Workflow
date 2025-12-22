@@ -1,4 +1,4 @@
-sample(cell_line)	organism	gender	age	primary_tumor_site	msi_status	ena_experiment_accession	platform	instrument_model	type	layout	url_r1	url_r2
+sample	organism	gender	age	primary_tumor_site	msi_status	ena_experiment_accession	platform	instrument_model	type	layout	url_r1	url_r2
 Colo205	Homo Sapiens	male		colon	MSS	SRX11633435	ILLUMINA	Illumina NovaSeq 6000	WXS	paired	ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR153/044/SRR15329144/SRR15329144_1.fastq.gz	ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR153/044/SRR15329144/SRR15329144_2.fastq.gz
 HCT116	Homo Sapiens	male	48	ascending colon	MSI	SRX1522540	ILLUMINA	Illumina HiSeq 2500	WXS	paired	ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR309/000/SRR3092140/SRR3092140_1.fastq.gz	ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR309/000/SRR3092140/SRR3092140_2.fastq.gz
 LoVo	Homo Sapiens	male	56	colon	MSI	SRX24644330	ILLUMINA	Illumina NovaSeq 6000	WXS	paired	ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR291/075/SRR29120475/SRR29120475_1.fastq.gz	ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR291/075/SRR29120475/SRR29120475_2.fastq.gz
