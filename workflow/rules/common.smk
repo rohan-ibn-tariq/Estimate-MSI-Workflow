@@ -39,7 +39,6 @@ def get_active_samples():
 print("=" * 60)
 print("Workflow Configuration Summary")
 print("=" * 60)
-print(f"Data source: {config['data_source']}")
 print(f"Samples to process: {get_active_samples()}")
 print(f"Total: {len(get_active_samples())} samples")
 print(f"Chromosome: {config['ref'].get('chromosome', 'all')}")
