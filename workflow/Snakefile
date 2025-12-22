@@ -1,0 +1,24 @@
+# ============================================
+# Estimate-MSI-Workflow - Main Entry Point
+# ============================================
+
+configfile: "config/config.yaml"
+
+include: "rules/common.smk"
+include: "rules/ref.smk"
+include: "rules/microsatellites.smk"
+include: "rules/reads.smk"
+include: "rules/alignment.smk"
+include: "rules/variant_calling.smk"
+include: "rules/msi.smk"
+
+
+rule all:
+    input:
+        "results/test.txt"
+
+rule test:
+    output:
+        "results/test.txt"
+    shell:
+        "echo 'Workflow loaded successfully!' > {output}"
