@@ -18,10 +18,10 @@ include: "rules/msi.smk"
 rule all:
     input:
         # Reference genome and index files
-        "resources/genome.fasta",
-        "resources/genome.gtf",
-        "resources/genome.fasta.fai",
-        multiext("resources/genome.fasta", ".amb", ".ann", ".bwt", ".pac", ".sa"),
+        "resources/genome/genome.fasta",
+        "resources/genome/genome.gtf",
+        "resources/genome/genome.fasta.fai",
+        multiext("resources/genome/genome.fasta", ".amb", ".ann", ".bwt", ".pac", ".sa"),
         # FASTQ files for all active samples
         expand(
             "resources/samples/{sample}_{read}.fastq.gz",
