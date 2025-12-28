@@ -44,3 +44,8 @@ rule all:
             "results/mapped/{sample}.bam.bai",
             sample=get_active_samples(),
         ),
+        # Variant calls (final BCF)
+        expand(
+            "results/calls/{sample}.bcf",
+            sample=get_active_samples(),
+        ),
