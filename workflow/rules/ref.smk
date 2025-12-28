@@ -51,11 +51,18 @@ rule bwa_index:
     input:
         "resources/genome/genome.fasta",
     output:
-        multiext("resources/genome/genome.fasta", ".amb", ".ann", ".bwt", ".pac", ".sa"),
+        multiext(
+            "resources/genome/genome.fasta",
+            ".amb",
+            ".ann",
+            ".bwt.2bit.64",
+            ".pac",
+            ".0123",
+        ),
     log:
         "logs/ref/bwa_index.log",
-    threads: config["threads"]["default"]
+    threads: config["threads"]["indexing"]
     resources:
         mem_mb=15000,
     wrapper:
-        "v8.1.1/bio/bwa/index"
+        "v8.1.1/bio/bwa-mem2/index"
