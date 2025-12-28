@@ -42,7 +42,7 @@ Sorting is done during alignment.
             ".0123",
         ),
     output:
-        temp("results/mapped/{sample}_sorted.bam"),
+        temp("results/mapped/{sample}_aligned.bam"),
     params:
         extra=lambda wildcards: get_read_group(wildcards),
         sort="samtools",
@@ -59,7 +59,7 @@ rule mark_duplicates:
 Mark duplicates using Picard MarkDuplicates.
 """
     input:
-        bams="results/mapped/{sample}_sorted.bam",
+        bams="results/mapped/{sample}_aligned.bam",
     output:
         bam="results/mapped/{sample}.bam",
         metrics="results/qc/{sample}_duplicate_metrics.txt",
