@@ -25,9 +25,9 @@ def get_read_group(wildcards):
 
 rule bwa_mem:
     """
-Align paired-end reads to reference genome using BWA-MEM2.
-Sorting is done during alignment.
-"""
+    Align paired-end reads to reference genome using BWA-MEM2.
+    Sorting is done during alignment.
+    """
     input:
         reads=[
             "resources/samples/{sample}_R1.fastq.gz",
