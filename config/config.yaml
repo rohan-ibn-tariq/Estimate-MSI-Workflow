@@ -52,6 +52,7 @@ varlociraptor:
 # ---------------------------------------------
 threads:
   default: 4
-  alignment: 8
+  indexing: 8
+  alignment: 14
   varlociraptor: 4
   pytrf: 2
