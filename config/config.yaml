@@ -9,7 +9,7 @@
 # Options:
 #   - null: Process ALL samples in samples.tsv
 #   - ["sample1", "sample2"]: Process only specified samples
-samples_to_run: ["Colo205"]
+samples_to_run: null
 
 # ---------------------------------------------
 # Reference Genome
