@@ -35,3 +35,12 @@ rule all:
             sample=get_active_samples(),
             read=["R1", "R2"],
         ),
+        # Alignment files (BAM + index)
+        expand(
+            "results/mapped/{sample}.bam",
+            sample=get_active_samples(),
+        ),
+        expand(
+            "results/mapped/{sample}.bam.bai",
+            sample=get_active_samples(),
+        ),
