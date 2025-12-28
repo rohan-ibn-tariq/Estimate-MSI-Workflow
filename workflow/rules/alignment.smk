@@ -42,7 +42,7 @@ Sorting is done during alignment.
             ".0123",
         ),
     output:
-        "results/mapped/{sample}.bam",
+        temp("results/mapped/{sample}_sorted.bam"),
     params:
         extra=lambda wildcards: get_read_group(wildcards),
         sort="samtools",
@@ -52,6 +52,23 @@ Sorting is done during alignment.
     threads: config["threads"]["alignment"]
     wrapper:
         "v8.1.1/bio/bwa-mem2/mem"
+
+
+rule mark_duplicates:
+    """
+Mark duplicates using Picard MarkDuplicates.
+"""
+    input:
+        bams="results/mapped/{sample}_sorted.bam",
+    output:
+        bam="results/mapped/{sample}.bam",
+        metrics="results/qc/{sample}_duplicate_metrics.txt",
+    log:
+        "logs/alignment/{sample}_markdup.log",
+    params:
+        extra="--REMOVE_DUPLICATES true --VALIDATION_STRINGENCY LENIENT",
+    wrapper:
+        "v8.1.1/bio/picard/markduplicates"
 
 
 rule samtools_index:
