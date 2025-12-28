@@ -39,7 +39,7 @@ rule genome_faidx:
     input:
         "resources/genome/genome.fasta",
     output:
-        "resources/genome.fasta.fai",
+        "resources/genome/genome.fasta.fai",
     log:
         "logs/ref/genome_faidx.log",
     wrapper:
