@@ -2,7 +2,9 @@
 # Estimate-MSI-Workflow - Main Entry Point
 # ============================================
 
+
 configfile: "config/config.yaml"
+
 
 include: "rules/common.smk"
 include: "rules/ref.smk"
@@ -15,7 +17,14 @@ include: "rules/msi.smk"
 
 rule all:
     input:
+        # Reference genome and index files
         "resources/genome.fasta",
         "resources/genome.gtf",
         "resources/genome.fasta.fai",
-        multiext("resources/genome.fasta", ".amb", ".ann", ".bwt", ".pac", ".sa")
+        multiext("resources/genome.fasta", ".amb", ".ann", ".bwt", ".pac", ".sa"),
+        # FASTQ files for all active samples
+        expand(
+            "resources/samples/{sample}_{read}.fastq.gz",
+            sample=get_active_samples(),
+            read=["R1", "R2"],
+        ),
