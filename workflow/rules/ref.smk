@@ -18,7 +18,6 @@ rule get_genome:
     wrapper:
         "v8.1.1/bio/reference/ensembl-sequence"
 
-
 rule get_annotation:
     """Download genome annotation from Ensembl."""
     output:
@@ -33,7 +32,6 @@ rule get_annotation:
     wrapper:
         "v8.1.1/bio/reference/ensembl-annotation"
 
-
 rule genome_faidx:
     """Create FASTA index."""
     input:
@@ -44,7 +42,6 @@ rule genome_faidx:
         "logs/ref/genome_faidx.log",
     wrapper:
         "v8.1.1/bio/samtools/faidx"
-
 
 rule bwa_index:
     """Create BWA index for alignment."""
