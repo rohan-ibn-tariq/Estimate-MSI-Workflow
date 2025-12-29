@@ -1,0 +1,10 @@
+# ============================================
+# pytrf Environment
+# ============================================
+
+
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - pytrf >=1.4
