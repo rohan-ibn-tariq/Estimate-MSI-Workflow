@@ -1,0 +1,10 @@
+# ============================================
+# Line endings (cross-platform safe)
+# ============================================
+* text=auto eol=lf
+
+# ============================================
+# Snakemake workflows (GitHub Linguist overrides)
+# ============================================
+Snakefile linguist-language=Python
+*.smk linguist-language=Python
