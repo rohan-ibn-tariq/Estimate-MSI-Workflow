@@ -3,7 +3,15 @@
 # ============================================
 
 
-configfile: "config/config.yaml"
+import os
+
+if os.path.exists("config/config.local.yaml"):
+
+    configfile: "config/config.local.yaml"
+
+else:
+
+    configfile: "config/config.yaml"
 
 
 include: "rules/common.smk"
