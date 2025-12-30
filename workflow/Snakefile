@@ -58,4 +58,4 @@ rule all:
             sample=get_active_samples(),
         ),
         # Microsatellites (dynamic - only creates needed BEDs)
-        get_required_ms_beds(),
+        # get_required_ms_beds(),
