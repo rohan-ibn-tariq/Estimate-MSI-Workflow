@@ -20,7 +20,7 @@ Parameters:
     output:
         csv="resources/microsatellites/all_repeats.csv",
     params:
-        min_repeats=config["microsatellites"]["min_repeats"],
+        min_repeats=config["msi"]["min_repeats"],
         fmt="csv",
     log:
         "logs/microsatellites/pytrf_find.log",
@@ -37,3 +37,35 @@ Parameters:
             {input.fasta} \
             > {log} 2>&1
         """
+
+rule pytrf_to_bed:
+    """
+    Convert PyTRF CSV output to UCSC BED Scheme
+    format (excluding bin column) and sort.
+    
+    Note: PyTRF CSV has NO header line.
+    """
+    input:
+        csv="resources/microsatellites/all_repeats.csv",
+    output:
+        bed="resources/microsatellites/all_microsatellites.bed"
+    log:
+        "logs/microsatellites/pytrf_to_bed.log"
+    threads:
+        config["threads"]["default"]
+    shell:
+        """
+        awk -F',' '{{
+            chrom = ($1 ~ /^chr/) ? $1 : "chr" $1
+            start = $2 - 1
+            end = $3
+            motif = $4
+            copies = int($6)
+            name = copies "x" motif
+            print chrom "\t" start "\t" end "\t" name
+        }}' {input.csv} | \
+        sort -k1,1V -k2,2n -k3,3n > {output.bed} \
+        2> {log}
+        """
+
+
