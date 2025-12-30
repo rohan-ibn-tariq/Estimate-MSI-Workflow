@@ -12,7 +12,7 @@ rule get_genome:
         datatype="dna",
         build=config["ref"]["build"],
         release=config["ref"]["release"],
-        chromosome=config["ref"].get("chromosome", ""),
+        # chromosome=config["ref"].get("chromosome", ""),
     log:
         "logs/ref/get_genome.log",
     wrapper:
