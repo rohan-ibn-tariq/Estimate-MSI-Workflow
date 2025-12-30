@@ -38,12 +38,21 @@ msi:
   #   - Mononucleotide repeats: >= 5 repeats (e.g., AAAAA)
   #   - Dinucleotide repeats: >= 5 repeats (e.g., CAGCAGCAGCAGCAG)
   #   - etc.
-  min_repeats: [5, 5, 5, 5, 5, 5]
+  min_repeats: [5, 3, 3, 3, 3, 3]
 
 # ---------------------------------------------
 # Variant Calling
 # ---------------------------------------------
+# Varlociraptor configuration
+# NOTE: Using custom feature branch build during development.
+# Create config/config.local.yaml with your local paths (see README).
+# After feature is merged to main and available via conda, this section
+# will be removed and varlociraptor will use conda environment instead.
 varlociraptor:
+  # These are placeholder paths - override in config.local.yaml
+  binary: "/path/to/varlociraptor/target/debug/varlociraptor"
+  directory: "/path/to/varlociraptor"
+  setup_script: "/path/to/varlociraptor/setup_pixi_env.sh"
   # Scenario file for tumor-only calling
   scenario: "config/scenario.yaml"
 
