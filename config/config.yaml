@@ -63,5 +63,5 @@ threads:
   default: 4
   indexing: 8
   alignment: 14
-  varlociraptor: 4
+  varlociraptor: 6
   single: 1
