@@ -2,6 +2,9 @@
 # Variant Calling with Varlociraptor
 # ============================================
 
+wildcard_constraints:
+    sample="[^/.]+"
+
 
 rule bcftools_mpileup:
     """
