@@ -109,7 +109,7 @@ Convert BCF to VCF (required for bedtools).
     input:
         "results/calls/{sample}.bcf",
     output:
-        temp("results/calls/{sample}_tmp.vcf"),
+        "results/calls/{sample}_tmp.vcf",
     log:
         "logs/bcftools/{sample}_view_vcf.log",
     params:
