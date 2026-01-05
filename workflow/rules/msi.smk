@@ -28,7 +28,7 @@ Requirements:
         varlociraptor_dir=config["varlociraptor"]["directory"],
         setup_script=config["varlociraptor"]["setup_script"],
         wrapper_script="workflow/scripts/varlociraptor-wrapper.sh",
-        msi_threshold=config["msi"]["msi_threshold"],
+        msi_threshold=config["msi"]["threshold"],
     threads: config["threads"]["varlociraptor"]
     shell:
         """
