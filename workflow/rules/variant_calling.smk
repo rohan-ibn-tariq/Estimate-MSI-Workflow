@@ -2,8 +2,8 @@
 # Variant Calling with Varlociraptor
 # ============================================
 
-wildcard_constraints:
-    sample="[^/.]+"
+# wildcard_constraints:
+#     sample="[^/.]+"
 
 
 rule bcftools_mpileup:
@@ -109,7 +109,7 @@ Convert BCF to VCF (required for bedtools).
     input:
         "results/calls/{sample}.bcf",
     output:
-        temp("results/calls/{sample}.tmp.vcf"),
+        temp("results/calls/{sample}_tmp.vcf"),
     log:
         "logs/bcftools/{sample}_view_vcf.log",
     params:
@@ -123,7 +123,7 @@ rule bedtools_sort_vcf:
 Sort VCF lexicographically and preserve header.
 """
     input:
-        in_file="results/calls/{sample}.tmp.vcf",
+        in_file="results/calls/{sample}_tmp.vcf",
     output:
         "results/calls/{sample}.vcf",
     log:
