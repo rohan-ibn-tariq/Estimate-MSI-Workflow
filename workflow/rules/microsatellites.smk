@@ -127,3 +127,49 @@ Note: GTF is 1-based(start & end both inclusive),
         > {output.bed} \
         2> {log}
         """
+
+
+rule create_wxs_microsatellites:
+    """
+Create WXS (exome) microsatellite BED.
+
+1. Takes all microsatellites (genome-wide)
+2. Keeps only those that overlap exonic regions
+
+Note: Output is already sorted (bedtools intersect preserves order)
+
+Flags:
+-wa: Write original entry from A (keep full microsatellite info)
+-u: Write each A entry only once (unique)
+"""
+    input:
+        left="resources/microsatellites/all_microsatellites.bed",
+        right="resources/microsatellites/exons.bed",
+    output:
+        "resources/microsatellites/wxs_microsatellites.bed",
+    params:
+        extra="-wa -u",
+    log:
+        "logs/microsatellites/create_wxs.log",
+    wrapper:
+        "v8.1.1/bio/bedtools/intersect"
+
+
+rule create_wgs_microsatellites:
+    """
+Create WGS (genome-wide) microsatellite BED.
+
+Simply copies all microsatellites (already sorted).
+Separate rule for clarity and dynamic workflow.
+"""
+    input:
+        bed="resources/microsatellites/all_microsatellites.bed",
+    output:
+        bed="resources/microsatellites/wgs_microsatellites.bed",
+    log:
+        "logs/microsatellites/create_wgs.log",
+    threads: config["threads"]["single"]
+    shell:
+        """
+cp {input.bed} {output.bed} 2> {log}
+"""
