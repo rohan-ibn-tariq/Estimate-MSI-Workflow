@@ -59,3 +59,13 @@ rule all:
         ),
         # Microsatellites (dynamic - only creates needed BEDs)
         get_required_ms_beds(),
+        # MSI estimation outputs
+        expand(
+            [
+                "results/msi/{sample}/pseudotime.tsv",
+                "results/msi/{sample}/pseudotime.vl.json",
+                "results/msi/{sample}/distribution.tsv",
+                "results/msi/{sample}/distribution.vl.json",
+            ],
+            sample=get_active_samples(),
+        ),
