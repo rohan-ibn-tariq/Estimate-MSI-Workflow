@@ -18,7 +18,7 @@ Parameters:
     input:
         fasta="resources/genome/genome.fasta",
     output:
-        csv="resources/microsatellites/all_repeats.csv",
+        csv=protected("resources/microsatellites/all_repeats.csv"),
     params:
         min_repeats=config["msi"]["min_repeats"],
         fmt="csv",
@@ -38,34 +38,49 @@ Parameters:
             > {log} 2>&1
         """
 
+
 rule pytrf_to_bed:
     """
-    Convert PyTRF CSV output to UCSC BED Scheme
-    format (excluding bin column) and sort.
-    
-    Note: PyTRF CSV has NO header line.
-    """
+Convert PyTRF CSV output to UCSC BED Scheme
+format (excluding bin column) and sort.
+
+Note: PyTRF CSV has NO header line.
+"""
     input:
         csv="resources/microsatellites/all_repeats.csv",
     output:
-        bed="resources/microsatellites/all_microsatellites.bed"
+        bed=temp("resources/microsatellites/all_microsatellites.unsorted.bed"),
     log:
-        "logs/microsatellites/pytrf_to_bed.log"
-    threads:
-        config["threads"]["default"]
+        "logs/microsatellites/pytrf_to_bed.log",
+    threads: config["threads"]["pytrf"]
     shell:
         """
         awk -F',' '{{
-            chrom = ($1 ~ /^chr/) ? $1 : "chr" $1
+            chrom = $1
             start = $2 - 1
             end = $3
             motif = $4
             copies = int($6)
             name = copies "x" motif
             print chrom "\t" start "\t" end "\t" name
-        }}' {input.csv} | \
-        sort -k1,1V -k2,2n -k3,3n > {output.bed} \
+        }}' {input.csv} \
+        > {output.bed} \
         2> {log}
         """
 
 
+rule bedtools_sort_all_microsatellites:
+    """
+Sort all microsatellites BED lexicographically.
+Lexicographical order: 1, 10, 11, 2, 22, 3, X, Y
+"""
+    input:
+        in_file="resources/microsatellites/all_microsatellites.unsorted.bed",
+    output:
+        "resources/microsatellites/all_microsatellites.bed",
+    log:
+        "logs/microsatellites/bedtools_sort_all.log",
+    params:
+        extra="",
+    wrapper:
+        "v8.1.1/bio/bedtools/sort"
