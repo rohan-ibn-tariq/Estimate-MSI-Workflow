@@ -97,3 +97,35 @@ Call variants using Varlociraptor Bayesian model.
         extra="",
     wrapper:
         "v8.1.1/bio/varlociraptor/call-variants"
+
+
+rule bcftools_view_to_vcf:
+    """
+Convert BCF to VCF (required for bedtools).
+"""
+    input:
+        "results/calls/{sample}.bcf",
+    output:
+        temp("results/calls/{sample}.unsorted.vcf"),
+    log:
+        "logs/bcftools/{sample}_view_vcf.log",
+    params:
+        extra="-O v",
+    wrapper:
+        "v8.1.1/bio/bcftools/view"
+
+
+rule bedtools_sort_vcf:
+    """
+Sort VCF lexicographically and preserve header.
+"""
+    input:
+        in_file="results/calls/{sample}.unsorted.vcf",
+    output:
+        "results/calls/{sample}.vcf",
+    log:
+        "logs/bedtools/{sample}_sort_vcf.log",
+    params:
+        extra="-header",
+    wrapper:
+        "v8.1.1/bio/bedtools/sort"
