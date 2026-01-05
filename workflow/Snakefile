@@ -54,7 +54,7 @@ rule all:
         ),
         # Variant calls (final BCF)
         expand(
-            "results/calls/{sample}.bcf",
+            "results/calls/{sample}.vcf",
             sample=get_active_samples(),
         ),
         # Microsatellites (dynamic - only creates needed BEDs)
