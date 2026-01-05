@@ -26,7 +26,7 @@ Parameters:
         "logs/microsatellites/pytrf_find.log",
     conda:
         "../envs/pytrf.yaml"
-    threads: config["threads"]["pytrf"]
+    threads: config["threads"]["single"]
     shell:
         """
         pytrf findstr \
@@ -45,6 +45,14 @@ Convert PyTRF CSV output to UCSC BED Scheme
 format (excluding bin column) and sort.
 
 Note: PyTRF CSV has NO header line.
+Columns in PyTRF CSV:
+1. Chromosome
+2. Start (1-based, inclusive)
+3. End (1-based, inclusive)
+4. Motif
+5. Motif length
+6. Repeat Number
+7. Repeat Length
 """
     input:
         csv="resources/microsatellites/all_repeats.csv",
@@ -52,7 +60,7 @@ Note: PyTRF CSV has NO header line.
         bed=temp("resources/microsatellites/all_microsatellites.unsorted.bed"),
     log:
         "logs/microsatellites/pytrf_to_bed.log",
-    threads: config["threads"]["pytrf"]
+    threads: config["threads"]["single"]
     shell:
         """
         awk -F',' '{{
@@ -84,3 +92,38 @@ Lexicographical order: 1, 10, 11, 2, 22, 3, X, Y
         extra="",
     wrapper:
         "v8.1.1/bio/bedtools/sort"
+
+
+rule extract_exonic_regions:
+    """
+Extract exonic coordinates from GTF for WXS filtering.
+
+1. Filters GTF for lines where feature type (column 3) = "exon"
+2. Extracts: chromosome (col 1), start (col 4 - 1), end (col 5)
+3. Sorts lexicographically using bedtools
+
+Example GTF line:
+1  ensembl  exon  1000  2000  .  ...
+
+Example BED output:
+1  999  2000
+
+Note: GTF is 1-based(start & end both inclusive),
+      BED is 0-based start (start inclusive, end exclusive).
+"""
+    input:
+        gtf="resources/genome/genome.gtf",
+    output:
+        bed="resources/microsatellites/exons.bed",
+    log:
+        "logs/microsatellites/extract_exons.log",
+    conda:
+        "../envs/bedtools.yaml"
+    threads: config["threads"]["single"]
+    shell:
+        """
+        awk '$3 == "exon" {{print $1 "\t" $4-1 "\t" $5}}' {input.gtf} | \
+        bedtools sort -i - \
+        > {output.bed} \
+        2> {log}
+        """
