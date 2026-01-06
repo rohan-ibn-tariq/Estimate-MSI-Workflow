@@ -111,7 +111,7 @@ Convert BCF to VCF (required for bedtools).
     log:
         "logs/bcftools/{sample}_view_vcf.log",
     params:
-        extra="-O v",
+        extra="",
     wrapper:
         "v8.1.1/bio/bcftools/view"
 
