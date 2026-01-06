@@ -26,9 +26,9 @@ Downloads paired-end FASTQ files from ENA using aria2c.
         retry_wait=3,
         timeout=60,
         connect_timeout=30,
-        continue_download=True,
-        allow_overwrite=True,
-        auto_file_renaming=False,
+        continue_download="true",
+        allow_overwrite="true",
+        auto_file_renaming="false",
         console_log_level="error",
         summary_interval=180,
     log:
@@ -56,10 +56,9 @@ Downloads paired-end FASTQ files from ENA using aria2c.
             --auto-file-renaming={params.auto_file_renaming} \
             --console-log-level={params.console_log_level} \
             --summary-interval={params.summary_interval} \
-            --dir=$(dirname {output.r1}) \
-            --out=$(basename {output.r1}) \
+            --out={output.r1} \
             {params.url_r1} \
-            2>> {log} &
+            2>> {log}
         
         aria2c \
             --max-connection-per-server={params.max_conn} \
@@ -74,12 +73,9 @@ Downloads paired-end FASTQ files from ENA using aria2c.
             --auto-file-renaming={params.auto_file_renaming} \
             --console-log-level={params.console_log_level} \
             --summary-interval={params.summary_interval} \
-            --dir=$(dirname {output.r2}) \
-            --out=$(basename {output.r2}) \
+            --out={output.r2} \
             {params.url_r2} \
-            2>> {log} &
-        
-        wait
+            2>> {log}
         
         if [ ! -f {output.r1} ] || [ ! -f {output.r2} ]; then
             echo "ERROR: Download failed" >> {log}
