@@ -30,12 +30,12 @@ rule all:
         "resources/genome/genome.gtf",
         "resources/genome/genome.fasta.fai",
         multiext(
-            "resources/genome/genome.fasta",
+            "resources/genome/genome",
             ".amb",
             ".ann",
-            ".bwt.2bit.64",
+            ".bwt",
             ".pac",
-            ".0123",
+            ".sa",
         ),
         # FASTQ files for all active samples
         expand(
