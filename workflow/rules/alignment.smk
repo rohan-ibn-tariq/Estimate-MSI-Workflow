@@ -61,8 +61,8 @@ Mark duplicates using Picard MarkDuplicates.
     input:
         bams="results/aligned/{sample}.bam",
     output:
-        bam="results/mapped/{sample}.bam",
-        metrics="results/qc/{sample}_duplicate_metrics.txt",
+        bam=protected("results/mapped/{sample}.bam"),
+        metrics=protected("results/qc/{sample}_duplicate_metrics.txt"),
     log:
         "logs/alignment/{sample}_markdup.log",
     params:

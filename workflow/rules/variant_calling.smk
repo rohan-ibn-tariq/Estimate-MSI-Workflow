@@ -16,7 +16,7 @@ First step of candidate variant calling.
         ref="resources/genome/genome.fasta",
         index="resources/genome/genome.fasta.fai",
     output:
-        "results/pileups/{sample}.pileup.bcf",
+        temp("results/pileups/{sample}.pileup.bcf"),
     params:
         uncompressed_bcf=False,
         extra="--max-depth 200 --min-BQ 20 -a AD,DP",
@@ -34,7 +34,7 @@ Call candidate variants from pileup.
     input:
         pileup="results/pileups/{sample}.pileup.bcf",
     output:
-        calls="results/candidates/{sample}.vcf.gz",
+        calls=temp("results/candidates/{sample}.vcf.gz"),
     params:
         uncompressed_bcf=False,
         caller="-m",
@@ -56,7 +56,7 @@ Estimate alignment properties for Varlociraptor.
         alignments="results/mapped/{sample}.bam",
         aln_idx="results/mapped/{sample}.bam.bai",
     output:
-        "results/alignment-properties/{sample}.json",
+        temp("results/alignment-properties/{sample}.json"),
     log:
         "logs/varlociraptor/{sample}_alignment_properties.log",
     params:
@@ -75,7 +75,7 @@ Preprocess alignments at candidate variant sites.
         alignments="results/mapped/{sample}.bam",
         candidate_variants="results/candidates/{sample}.vcf.gz",
     output:
-        "results/observations/{sample}.bcf",
+        temp("results/observations/{sample}.bcf"),
     log:
         "logs/varlociraptor/{sample}_preprocess.log",
     params:
@@ -92,7 +92,7 @@ Call variants using Varlociraptor Bayesian model.
         observations="results/observations/{sample}.bcf",
         scenario=config["varlociraptor"]["scenario"],
     output:
-        "results/calls/{sample}.bcf",
+        temp("results/calls/{sample}.bcf"),
     log:
         "logs/varlociraptor/{sample}_call.log",
     params:
