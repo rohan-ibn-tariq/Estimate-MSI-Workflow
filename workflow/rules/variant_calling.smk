@@ -22,7 +22,6 @@ First step of candidate variant calling.
         extra="--max-depth 200 --min-BQ 20 -a AD,DP",
     log:
         "logs/bcftools/{sample}_mpileup.log",
-    threads: config["threads"]["default"]
     wrapper:
         "v8.1.1/bio/bcftools/mpileup"
 
@@ -41,7 +40,6 @@ Call candidate variants from pileup.
         extra="--ploidy 2 --variants-only",
     log:
         "logs/bcftools/{sample}_call.log",
-    threads: config["threads"]["default"]
     wrapper:
         "v8.1.1/bio/bcftools/call"
 
