@@ -25,7 +25,7 @@ def get_read_group(wildcards):
 
 rule bwa_mem:
     """
-Align paired-end reads to reference genome using BWA-MEM2.
+Align paired-end reads to reference genome using BWA.
 Sorting is done during alignment.
 """
     input:
@@ -38,7 +38,7 @@ Sorting is done during alignment.
         temp("results/aligned/{sample}.bam"),
     params:
         extra=lambda wildcards: get_read_group(wildcards),
-        sort="samtools",
+        sorting="samtools",
         sort_order="coordinate",
     log:
         "logs/alignment/{sample}_bwa.log",
