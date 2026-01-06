@@ -14,8 +14,8 @@ rule download_fastq:
 Downloads paired-end FASTQ files from ENA using aria2c.
 """
     output:
-        r1="resources/samples/{sample}_R1.fastq.gz",
-        r2="resources/samples/{sample}_R2.fastq.gz",
+        r1=protected("resources/samples/{sample}_R1.fastq.gz"),
+        r2=protected("resources/samples/{sample}_R2.fastq.gz"),
     params:
         url_r1=lambda wildcards: get_fastq_url(wildcards, "r1"),
         url_r2=lambda wildcards: get_fastq_url(wildcards, "r2"),
