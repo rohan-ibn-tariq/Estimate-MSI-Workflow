@@ -33,14 +33,7 @@ Sorting is done during alignment.
             "resources/samples/{sample}_R1.fastq.gz",
             "resources/samples/{sample}_R2.fastq.gz",
         ],
-        idx=multiext(
-            "resources/genome/genome.fasta",
-            ".amb",
-            ".ann",
-            ".bwt.2bit.64",
-            ".pac",
-            ".0123",
-        ),
+        idx=rules.bwa_index.output.idx,
     output:
         temp("results/aligned/{sample}.bam"),
     params:
@@ -51,7 +44,7 @@ Sorting is done during alignment.
         "logs/alignment/{sample}_bwa.log",
     threads: config["threads"]["alignment"]
     wrapper:
-        "v8.1.1/bio/bwa-mem2/mem"
+        "v8.1.1/bio/bwa/mem"
 
 
 rule mark_duplicates:
