@@ -37,9 +37,10 @@ if [ ! -f "$SETUP_SCRIPT" ]; then
 fi
 
 echo "Activating pixi environment..." >&2
-cd "$VARLOCIRAPTOR_DIR"
+ORIGINAL_DIR=$(pwd)
 
-pixi run bash -c "
-    source $SETUP_SCRIPT
-    $VARLOCIRAPTOR_BIN $*
-"
+(cd "$VARLOCIRAPTOR_DIR" && pixi run bash -c "
+    source '$SETUP_SCRIPT'
+    cd '$ORIGINAL_DIR'
+    '$VARLOCIRAPTOR_BIN' $*
+")
