@@ -64,6 +64,6 @@ rule bwa_index:
         "logs/ref/bwa_index.log",
     threads: config["threads"]["indexing"]
     resources:
-        mem_mb=25000,
+        mem_mb=60000,
     wrapper:
         "v8.1.1/bio/bwa-mem2/index"
