@@ -22,7 +22,7 @@ ref:
   # Chromosome filter for testing
   # "22" = chr22 only (fast testing)
   # ""   = all chromosomes (production)
-  chromosome: "22"
+  chromosome: ""
 
 # ---------------------------------------------
 # MSI Analysis Parameters
