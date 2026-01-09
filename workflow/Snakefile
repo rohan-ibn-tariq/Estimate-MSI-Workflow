@@ -21,6 +21,7 @@ include: "rules/reads.smk"
 include: "rules/alignment.smk"
 include: "rules/variant_calling.smk"
 include: "rules/msi.smk"
+include: "rules/msisensor.smk"
 
 
 rule all:
