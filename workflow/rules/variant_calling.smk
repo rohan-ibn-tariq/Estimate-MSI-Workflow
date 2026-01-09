@@ -17,7 +17,7 @@ rule freebayes_candidates:
     log:
         "logs/freebayes/{sample}.log"
     params:
-        extra="--pooled-continuous --no-snps --no-mnps"
+        extra="--pooled-continuous -I -X"
     threads: config["threads"]["freebayes"]
     resources:
         mem_mb=16384
