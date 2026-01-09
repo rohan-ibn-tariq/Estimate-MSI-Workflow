@@ -63,5 +63,6 @@ threads:
   default: 4
   indexing: 8
   alignment: 14
+  freebayes: 16
   varlociraptor: 6
   single: 1

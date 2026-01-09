@@ -6,42 +6,23 @@ wildcard_constraints:
     sample="[^/.]+"
 
 
-rule bcftools_mpileup:
-    """
-Generate pileup from BAM alignments.
-First step of candidate variant calling.
-"""
+rule freebayes_candidates:
     input:
-        alignments="results/mapped/{sample}.bam",
+        alns="results/mapped/{sample}.bam",
+        idxs="results/mapped/{sample}.bam.bai",
         ref="resources/genome/genome.fasta",
         index="resources/genome/genome.fasta.fai",
     output:
-        temp("results/pileups/{sample}.pileup.bcf"),
-    params:
-        uncompressed_bcf=False,
-        extra="--max-depth 200 --min-BQ 20 -a AD,DP",
+        bcf=temp("results/candidates/{sample}.bcf")
     log:
-        "logs/bcftools/{sample}_mpileup.log",
-    wrapper:
-        "v8.1.1/bio/bcftools/mpileup"
-
-
-rule bcftools_call:
-    """
-Call candidate variants from pileup.
-"""
-    input:
-        pileup="results/pileups/{sample}.pileup.bcf",
-    output:
-        calls=temp("results/candidates/{sample}.vcf.gz"),
+        "logs/freebayes/{sample}.log"
     params:
-        uncompressed_bcf=False,
-        caller="-m",
-        extra="--ploidy 2 --variants-only",
-    log:
-        "logs/bcftools/{sample}_call.log",
+        extra="--pooled-continuous --no-snps --no-mnps"
+    threads: config["threads"]["freebayes"]
+    resources:
+        mem_mb=16384
     wrapper:
-        "v8.1.1/bio/bcftools/call"
+        "v8.1.1/bio/freebayes"
 
 
 rule varlociraptor_alignment_properties:
@@ -71,7 +52,7 @@ Preprocess alignments at candidate variant sites.
         ref="resources/genome/genome.fasta",
         alignment_properties="results/alignment-properties/{sample}.json",
         alignments="results/mapped/{sample}.bam",
-        candidate_variants="results/candidates/{sample}.vcf.gz",
+        candidate_variants="results/candidates/{sample}.bcf",
     output:
         temp("results/observations/{sample}.bcf"),
     log:
