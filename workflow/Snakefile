@@ -22,6 +22,7 @@ include: "rules/alignment.smk"
 include: "rules/variant_calling.smk"
 include: "rules/msi.smk"
 include: "rules/msisensor.smk"
+include: "rules/coverage.smk"
 
 
 rule all:
@@ -67,6 +68,14 @@ rule all:
                 "results/msi/{sample}/pseudotime.vl.json",
                 "results/msi/{sample}/distribution.tsv",
                 "results/msi/{sample}/distribution.vl.json",
+            ],
+            sample=get_active_samples(),
+        ),
+        # Coverage analysis outputs
+        expand(
+            [
+                "results/coverage/{sample}/ms_coverage.tsv",
+                "results/coverage/{sample}/coverage_histogram.html",
             ],
             sample=get_active_samples(),
         ),

@@ -1,0 +1,11 @@
+# ============================================
+# coverage Environment
+# ============================================
+
+
+channels:
+  - conda-forge
+dependencies:
+  - python=3.13
+  - polars=1.36
+  - altair=6.0
