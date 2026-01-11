@@ -18,7 +18,17 @@ df = pl.read_csv(
     separator="\t",
     has_header=False,
     new_columns=["chr", "start", "end", "name", "overlap_count", 
-                 "bases_covered", "length", "fraction"]
+                 "bases_covered", "length", "fraction"],
+    schema_overrides={
+        "chr": pl.String,
+        "start": pl.Int64,
+        "end": pl.Int64,
+        "name": pl.String,
+        "overlap_count": pl.Int64,
+        "bases_covered": pl.Int64,
+        "length": pl.Int64,
+        "fraction": pl.Float64,
+    }
 )
 
 chart = alt.Chart(df).mark_bar().encode(
