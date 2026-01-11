@@ -31,7 +31,9 @@ df = pl.read_csv(
     }
 )
 
-chart = alt.Chart(df).mark_bar().encode(
+histogram_data = df.select(["fraction"])
+
+chart = alt.Chart(histogram_data).mark_bar().encode(
     x=alt.X('fraction:Q', bin=True, title='Coverage Fraction'),
     y=alt.Y('count()', title='Number of MS Regions')
 ).properties(
