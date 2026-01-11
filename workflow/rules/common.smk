@@ -83,6 +83,40 @@ def get_required_ms_beds():
     return beds
 
 
+def get_sorted_microsatellite_bed(wildcards):
+    """
+    Get the sorted microsatellite BED file for this sample.
+    Uses sorted BEDs that match genome.fai order for efficient streaming.
+    Note: Used for coverage calculation.
+    """
+    process_type = get_process_type(wildcards)
+
+    if process_type == "WXS":
+        return "resources/coverage/wxs_microsatellites.sorted.bed"
+    else:
+        return "resources/coverage/wgs_microsatellites.sorted.bed"
+
+
+def get_required_sorted_ms_beds():
+    """
+    Figure out which sorted microsatellite BED files are needed.
+    Only creates sorted BEDs for process types actually used.
+    Note: Used for coverage calculation.
+    """
+    active_samples = get_active_samples()
+    process_types = samples_df[samples_df["sample"].isin(active_samples)][
+        "process_as"
+    ].unique()
+
+    beds = []
+    if "WXS" in process_types:
+        beds.append("resources/coverage/wxs_microsatellites.sorted.bed")
+    if "WGS" in process_types:
+        beds.append("resources/coverage/wgs_microsatellites.sorted.bed")
+
+    return beds
+
+
 # Print summary
 print("=" * 60)
 print("Workflow Configuration Summary")
