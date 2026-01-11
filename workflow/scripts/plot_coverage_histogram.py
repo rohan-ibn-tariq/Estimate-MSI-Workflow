@@ -4,7 +4,6 @@ Plot histogram of MS region coverage fractions.
 """
 
 
-import snakemake
 import polars as pl
 import altair as alt
 import sys
