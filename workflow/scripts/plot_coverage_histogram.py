@@ -33,14 +33,11 @@ df = pl.read_csv(
 
 histogram_data = df.select(["overlap_count"])
 
-max_reads = df["overlap_count"].max()
-
 chart = alt.Chart(histogram_data).mark_bar().encode(
     x=alt.X(
         'overlap_count:Q',
-        bin=alt.Bin(maxbins=100),
+        bin=True,
         title='Number of Reads Overlapping MS Region',
-        scale=alt.Scale(domain=[0, max_reads])
     ),
     y=alt.Y('count()', title='Number of MS Regions')
 ).properties(
