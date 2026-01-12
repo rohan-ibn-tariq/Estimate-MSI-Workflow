@@ -97,12 +97,29 @@ Convert BCF to VCF (required for bedtools).
         "v8.1.1/bio/bcftools/view"
 
 
+rule atomize_variants:
+    """
+    Atomize variants after Varlociraptor calling.    
+    """
+    input:
+        "results/calls/{sample}.tmp.vcf",
+        ref="resources/genome/genome.fasta",
+    output:
+        temp("results/calls/{sample}.atomized.vcf"),
+    log:
+        "logs/atomize/{sample}.log",
+    params:
+        extra="-a -m -any",
+    wrapper:
+        "v8.1.1/bio/bcftools/norm"
+
+
 rule bedtools_sort_vcf:
     """
 Sort VCF lexicographically and preserve header.
 """
     input:
-        in_file="results/calls/{sample}.tmp.vcf",
+        in_file="results/calls/{sample}.atomized.vcf",
     output:
         "results/calls/{sample}.vcf",
     log:
