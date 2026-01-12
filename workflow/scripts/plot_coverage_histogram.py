@@ -39,7 +39,11 @@ chart = alt.Chart(histogram_data).mark_bar().encode(
         bin=True,
         title='Number of Reads Overlapping MS Region',
     ),
-    y=alt.Y('count()', title='Number of MS Regions')
+    y=alt.Y('count()', title='Number of MS Regions'),
+    tooltip=[
+        alt.Tooltip('overlap_count:Q', bin=True, title='Read Count Range'),
+        alt.Tooltip('count()', title='Number of MS Regions')
+    ]
 ).properties(
     width=800,
     height=400,
