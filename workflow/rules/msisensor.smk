@@ -131,7 +131,7 @@ Parameters matching PyTRF [5,3,3,3,3,3]:
         dis="results/msisensor2/{sample}_dis",
         somatic="results/msisensor2/{sample}_somatic",
     params:
-        prefix=lambda wildcards: f"results/msisensor2/{wildcards.sample}",
+        prefix=lambda wildcards, output: output.msi,
         exon_flag=lambda wildcards, input: (
             f"-e {input.exons}" if get_process_type(wildcards) == "WXS" else ""
         ),
