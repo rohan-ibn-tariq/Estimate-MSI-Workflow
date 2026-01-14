@@ -79,3 +79,17 @@ rule all:
             ],
             sample=get_active_samples(),
         ),
+        # MSIsensor2 resources
+        "resources/msisensor2/models_hg38",
+        "resources/msisensor2/microsatellites_msisensor2.list",
+        "resources/msisensor2/exons.bed",
+        # MSIsensor2 results
+        expand(
+            [
+                "results/msisensor2/{sample}",
+                "results/msisensor2/{sample}_dis",
+                "results/msisensor2/{sample}_somatic",
+            ],
+            sample=get_active_samples(),
+        ),
+
