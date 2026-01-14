@@ -125,6 +125,7 @@ Parameters matching PyTRF [5,3,3,3,3,3]:
         bai="results/mapped/{sample}.bam.bai",  # Needed for indexing
         models="resources/msisensor2/models_hg38",
         exons="resources/msisensor2/exons.bed",  # Always required for dependency
+        sites="resources/msisensor2/microsatellites_msisensor2.list",
     output:
         msi="results/msisensor2/{sample}",
         dis="results/msisensor2/{sample}_dis",
@@ -151,6 +152,7 @@ Parameters matching PyTRF [5,3,3,3,3,3]:
 
         msisensor2 msi \
             -M {input.models} \
+            -d {input.sites} \
             -t {input.bam} \
             {params.exon_flag} \
             -o {params.prefix} \
