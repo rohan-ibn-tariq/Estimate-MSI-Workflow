@@ -122,6 +122,7 @@ Parameters matching PyTRF [5,3,3,3,3,3]:
 """
     input:
         bam="results/mapped/{sample}.bam",
+        bai="results/mapped/{sample}.bam.bai",  # Needed for indexing
         models="resources/msisensor2/models_hg38",
         exons="resources/msisensor2/exons.bed",  # Always required for dependency
     output:
