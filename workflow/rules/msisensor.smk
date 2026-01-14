@@ -151,6 +151,7 @@ Parameters matching PyTRF [5,3,3,3,3,3]:
             -M {input.models} \
             -d {input.sites} \
             -t {input.bam} \
+            {params.exon_flag} \
             -o {params.prefix} \
             -b {threads} \
             -c {params.coverage_threshold} \
