@@ -95,8 +95,8 @@ Output (4-column BED): chr  start  end  gene_name
     threads: config["threads"]["single"]
     shell:
         """
-        awk '$3 == "exon" {{
-            match($9, /gene_name "([^"]+)"/, arr);
+        awk -F'\t' '$3 == "exon" {{
+            match($9, /gene_name[[:space:]]+"([^"]+)"/, arr);
             gene = (arr[1] != "" ? arr[1] : "unknown");
             print $1 "\t" ($4-1) "\t" $5 "\t" gene
         }}' {input.gtf} | \
