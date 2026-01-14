@@ -136,7 +136,7 @@ Parameters matching PyTRF [5,3,3,3,3,3]:
             f"-e {input.exons}" if get_process_type(wildcards) == "WXS" else ""
         ),
         coverage_threshold=lambda wildcards: (
-            20 if get_process_type(wildcards) == "WXS" else 15
+            1 if get_process_type(wildcards) == "WXS" else 1
         ),
     log:
         "logs/msisensor2/{sample}_msi.log",
