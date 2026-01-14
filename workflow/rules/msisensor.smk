@@ -132,11 +132,8 @@ Parameters matching PyTRF [5,3,3,3,3,3]:
         somatic="results/msisensor2/{sample}_somatic",
     params:
         prefix=lambda wildcards: f"results/msisensor2/{wildcards.sample}",
-        process_type=get_process_type,
-        exon_flag=lambda wildcards: (
-            "-e resources/msisensor2/exons.bed"
-            if get_process_type(wildcards) == "WXS"
-            else ""
+        exon_flag=lambda wildcards, input: (
+            f"-e {input.exons}" if get_process_type(wildcards) == "WXS" else ""
         ),
         coverage_threshold=lambda wildcards: (
             20 if get_process_type(wildcards) == "WXS" else 15
@@ -148,7 +145,7 @@ Parameters matching PyTRF [5,3,3,3,3,3]:
     threads: 12  # MSIsensor2 can multithread, @TODO: make configurable
     shell:
         """
-        mkdir -p results/msisensor2
+        mkdir -p $(dirname {output.msi})
 
         msisensor2 msi \
             -M {input.models} \
