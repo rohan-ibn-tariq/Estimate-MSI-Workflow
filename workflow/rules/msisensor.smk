@@ -141,8 +141,8 @@ rule convert_bam_to_ucsc:
         script="resources/msisensor2/chromToUcsc.py",
         alias="resources/msisensor2/hg38.chromAlias.txt",
     output:
-        bam="results/msisensor2/{sample}/converted.bam",
-        bai="results/msisensor2/{sample}/converted.bam.bai",
+        bam="results/msisensor2/{sample}_bam/converted.bam",
+        bai="results/msisensor2/{sample}_bam/converted.bam.bai",
     log:
         "logs/msisensor2/{sample}/convert_bam.log",
     conda:
@@ -205,8 +205,8 @@ Parameters matching PyTRF [5,3,3,3,3,3]:
 -c 20: Coverage threshold (WXS: 20, WGS: 15)
 """
     input:
-        bam="results/msisensor2/{sample}/converted.bam",
-        bai="results/msisensor2/{sample}/converted.bam.bai",  # Needed for indexing
+        bam="results/msisensor2/{sample}_bam/converted.bam",
+        bai="results/msisensor2/{sample}_bam/converted.bam.bai",  # Needed for indexing
         models="resources/msisensor2/models_hg38",
         exons="resources/msisensor2/exon_ucsc.bed",  # Always required for dependency
         sites="resources/msisensor2/microsatellites_list_ucsc.list",
