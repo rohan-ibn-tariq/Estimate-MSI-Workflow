@@ -177,7 +177,7 @@ rule convert_exon_bed_to_ucsc:
 rule convert_msisensor2_list:
     """Convert MSIsensor2 list chromosome names to UCSC format."""
     input:
-        list="resources/msisensor2/microsatellites_list",
+        list="resources/msisensor2/microsatellites_msisensor2.list",
         script="resources/msisensor2/chromToUcsc.py",
         alias="resources/msisensor2/hg38.chromAlias.txt",
     output:
