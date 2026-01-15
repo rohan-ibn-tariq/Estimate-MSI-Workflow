@@ -106,6 +106,90 @@ Output (4-column BED): chr  start  end  gene_name
         """
 
 
+rule download_chromToUcsc:
+    """Download UCSC chromToUcsc Python script."""
+    output:
+        script="resources/msisensor2/chromToUcsc.py",
+    log:
+        "logs/msisensor2/download_chromToUcsc.log",
+    shell:
+        """
+        wget -O {output.script} \
+            https://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/chromToUcsc 2> {log}
+        chmod +x {output.script}
+        """
+
+
+rule download_chromAlias:
+    """Download hg38 chromAlias mapping file."""
+    output:
+        alias="resources/msisensor2/hg38.chromAlias.txt",
+    log:
+        "logs/msisensor2/download_chromAlias.log",
+    shell:
+        """
+        wget -O {output.alias} \
+            https://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/latest/hg38.chromAlias.txt 2> {log}
+        """
+
+
+rule convert_bam_to_ucsc:
+    """Convert BAM chromosome names from Ensembl to UCSC format."""
+    input:
+        bam="results/mapped/{sample}.bam",
+        bai="results/mapped/{sample}.bam.bai",
+        script="resources/msisensor2/chromToUcsc.py",
+        alias="resources/msisensor2/hg38.chromAlias.txt",
+    output:
+        bam="results/msisensor2/{sample}/converted.bam",
+        bai="results/msisensor2/{sample}/converted.bam.bai",
+    log:
+        "logs/msisensor2/{sample}/convert_bam.log",
+    conda:
+        "../envs/samtools.yaml"
+    threads: config["threads"]["indexing"]
+    shell:
+        """
+        samtools view -h {input.bam} 2>> {log} | \
+        python {input.script} -a {input.alias} -s 2>> {log} | \
+        samtools view -b -@ {threads} -o {output.bam} 2>> {log}
+
+        samtools index -@ {threads} {output.bam} 2>> {log}
+        """
+
+
+rule convert_exon_bed_to_ucsc:
+    """Convert exon BED chromosome names to UCSC format."""
+    input:
+        bed="resources/msisensor2/exons.bed",
+        script="resources/msisensor2/chromToUcsc.py",
+        alias="resources/msisensor2/hg38.chromAlias.txt",
+    output:
+        bed="resources/msisensor2/exon_ucsc.bed",
+    log:
+        "logs/msisensor2/convert_exon_bed.log",
+    shell:
+        """
+        python {input.script} -a {input.alias} -i {input.bed} -o {output.bed} -s 2> {log}
+        """
+
+
+rule convert_msisensor2_list:
+    """Convert MSIsensor2 list chromosome names to UCSC format."""
+    input:
+        list="resources/msisensor2/microsatellites_list",
+        script="resources/msisensor2/chromToUcsc.py",
+        alias="resources/msisensor2/hg38.chromAlias.txt",
+    output:
+        list="resources/msisensor2/microsatellites_list_ucsc.list",
+    log:
+        "logs/msisensor2/convert_list.log",
+    shell:
+        """
+        python {input.script} -a {input.alias} -i {input.list} -o {output.list} -s 2> {log}
+        """
+
+
 rule msisensor2_msi:
     """
 MSIsensor2 tumor-only MSI detection.
@@ -121,11 +205,11 @@ Parameters matching PyTRF [5,3,3,3,3,3]:
 -c 20: Coverage threshold (WXS: 20, WGS: 15)
 """
     input:
-        bam="results/mapped/{sample}.bam",
-        bai="results/mapped/{sample}.bam.bai",  # Needed for indexing
+        bam="results/msisensor2/{sample}/converted.bam",
+        bai="results/msisensor2/{sample}/converted.bam.bai",  # Needed for indexing
         models="resources/msisensor2/models_hg38",
-        exons="resources/msisensor2/exons.bed",  # Always required for dependency
-        sites="resources/msisensor2/microsatellites_msisensor2.list",
+        exons="resources/msisensor2/exon_ucsc.bed",  # Always required for dependency
+        sites="resources/msisensor2/microsatellites_list_ucsc.list",
     output:
         msi="results/msisensor2/{sample}",
         dis="results/msisensor2/{sample}_dis",
