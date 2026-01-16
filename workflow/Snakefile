@@ -92,4 +92,15 @@ rule all:
             ],
             sample=get_active_samples(),
         ),
-
+        # MSIsensor-pro + Varlociraptor resources
+        get_required_ms_beds_msisensor(),
+        # MSIsensor-pro + Varlociraptor results
+        expand(
+            [
+                "results/msisensor-pro/msi/{sample}/pseudotime.tsv",
+                "results/msisensor-pro/msi/{sample}/pseudotime.vl.json",
+                "results/msisensor-pro/msi/{sample}/distribution.tsv",
+                "results/msisensor-pro/msi/{sample}/distribution.vl.json",
+            ],
+            sample=get_active_samples(),
+        ),

@@ -83,6 +83,41 @@ def get_required_ms_beds():
     return beds
 
 
+def get_microsatellite_msisensor(wildcards):
+    """
+    Get the correct microsatellite BED file for this sample.
+
+    WXS samples: exonic microsatellites only
+    WGS samples: all microsatellites
+    """
+    process_type = get_process_type(wildcards)
+
+    if process_type == "WXS":
+        return "resources/msisensor-pro/microsatellites/wxs_msisensor_microsatellites.bed"
+    else:
+        return "resources/msisensor-pro/microsatellites/wgs_msisensor_microsatellites.bed"
+
+
+def get_required_ms_beds_msisensor():
+    """
+    Figure out which microsatellite BED files we need to create.
+
+    Only creates BEDs for process types actually used.
+    """
+    active_samples = get_active_samples()
+    process_types = samples_df[samples_df["sample"].isin(active_samples)][
+        "process_as"
+    ].unique()
+
+    beds = []
+    if "WXS" in process_types:
+        beds.append("resources/msisensor-pro/microsatellites/wxs_msisensor_microsatellites.bed")
+    if "WGS" in process_types:
+        beds.append("resources/msisensor-pro/microsatellites/wgs_msisensor_microsatellites.bed")
+
+    return beds
+
+
 def get_sorted_microsatellite_bed(wildcards):
     """
     Get the sorted microsatellite BED file for this sample.

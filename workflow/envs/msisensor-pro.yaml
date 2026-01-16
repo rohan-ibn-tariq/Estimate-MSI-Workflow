@@ -1,0 +1,11 @@
+# ============================================
+# msisensor-pro Environment
+# ============================================
+
+
+channels:
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  - msisensor-pro =1.30
