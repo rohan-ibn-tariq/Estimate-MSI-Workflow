@@ -23,6 +23,7 @@ include: "rules/variant_calling.smk"
 include: "rules/msi.smk"
 include: "rules/msisensor.smk"
 include: "rules/coverage.smk"
+include: "rules/msisensor-pro_scan_plus_varlociraptor.smk"
 
 
 rule all:
