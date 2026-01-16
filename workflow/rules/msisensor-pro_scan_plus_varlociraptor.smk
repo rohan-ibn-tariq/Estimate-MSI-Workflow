@@ -17,7 +17,7 @@ Run MSIsensor-pro scan to identify microsatellite sites in the reference genome.
         "../envs/msisensor-pro.yaml"
     shell:
         """
-        msisensor-pro scan -d {output.msisensor_sites} -o {input.reference} 2>> {log}
+        msisensor-pro scan -d {input.reference} -o {output.msisensor_sites}  2>> {log}
         """
 
 
