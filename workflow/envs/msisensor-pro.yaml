@@ -8,4 +8,4 @@ channels:
   - bioconda
   - nodefaults
 dependencies:
-  - msisensor-pro =1.30
+  - msisensor-pro =1.3
