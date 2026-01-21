@@ -93,9 +93,13 @@ def get_microsatellite_msisensor(wildcards):
     process_type = get_process_type(wildcards)
 
     if process_type == "WXS":
-        return "resources/msisensor-pro/microsatellites/wxs_msisensor_microsatellites.bed"
+        return (
+            "resources/msisensor-pro/microsatellites/wxs_msisensor_microsatellites.bed"
+        )
     else:
-        return "resources/msisensor-pro/microsatellites/wgs_msisensor_microsatellites.bed"
+        return (
+            "resources/msisensor-pro/microsatellites/wgs_msisensor_microsatellites.bed"
+        )
 
 
 def get_required_ms_beds_msisensor():
@@ -111,11 +115,49 @@ def get_required_ms_beds_msisensor():
 
     beds = []
     if "WXS" in process_types:
-        beds.append("resources/msisensor-pro/microsatellites/wxs_msisensor_microsatellites.bed")
+        beds.append(
+            "resources/msisensor-pro/microsatellites/wxs_msisensor_microsatellites.bed"
+        )
     if "WGS" in process_types:
-        beds.append("resources/msisensor-pro/microsatellites/wgs_msisensor_microsatellites.bed")
+        beds.append(
+            "resources/msisensor-pro/microsatellites/wgs_msisensor_microsatellites.bed"
+        )
 
     return beds
+
+
+# ============================================
+# Baseline Bed Selection for MSIsensor-pro + Varlociraptor
+# ============================================
+
+
+def get_baseline_bed(wildcards):
+    """Get the correct baseline BED for this sample type."""
+    process_type = get_process_type(wildcards)
+
+    if process_type == "WXS":
+        return "resources/msisensor-pro/baseline/wxs_microsatellites.bed"
+    else:
+        return "resources/msisensor-pro/baseline/wgs_microsatellites.bed"
+
+
+def get_required_baseline_beds():
+    """Figure out which baseline BED files we need."""
+    active_samples = get_active_samples()
+    process_types = samples_df[samples_df["sample"].isin(active_samples)][
+        "process_as"
+    ].unique()
+
+    beds = []
+    if "WXS" in process_types:
+        beds.append("resources/msisensor-pro/baseline/wxs_microsatellites.bed")
+    if "WGS" in process_types:
+        beds.append("resources/msisensor-pro/baseline/wgs_microsatellites.bed")
+
+    return beds
+
+
+# ============================================
 
 
 def get_sorted_microsatellite_bed(wildcards):

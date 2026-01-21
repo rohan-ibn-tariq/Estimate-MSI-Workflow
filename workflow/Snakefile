@@ -24,6 +24,7 @@ include: "rules/msi.smk"
 include: "rules/msisensor.smk"
 include: "rules/coverage.smk"
 include: "rules/msisensor-pro_scan_plus_varlociraptor.smk"
+include: "rules/msisensor-pro_baseline_plus_varlociraptor.smk"
 
 
 rule all:
@@ -102,6 +103,18 @@ rule all:
                 "results/msisensor-pro/msi/{sample}/pseudotime.vl.json",
                 "results/msisensor-pro/msi/{sample}/distribution.tsv",
                 "results/msisensor-pro/msi/{sample}/distribution.vl.json",
+            ],
+            sample=get_active_samples(),
+        ),
+        # MSIsensor-pro baseline + Varlociraptor resources
+        get_required_baseline_beds(),
+        # MSIsensor-pro baseline + Varlociraptor results
+        expand(
+            [
+                "results/msisensor-pro-baseline-varlociraptor/msi/{sample}/pseudotime.tsv",
+                "results/msisensor-pro-baseline-varlociraptor/msi/{sample}/pseudotime.vl.json",
+                "results/msisensor-pro-baseline-varlociraptor/msi/{sample}/distribution.tsv",
+                "results/msisensor-pro-baseline-varlociraptor/msi/{sample}/distribution.vl.json",
             ],
             sample=get_active_samples(),
         ),
