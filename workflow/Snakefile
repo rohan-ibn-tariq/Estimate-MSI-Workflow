@@ -130,8 +130,10 @@ rule all:
         ),
         # gnomAD downloads
         expand(
-            "resources/gnomad/{gnomad_type}/gnomad.{gnomad_type}.v4.1.sites.chr{chr}.vcf.bgz",
-            "resources/gnomad/{gnomad_type}/gnomad.{gnomad_type}.v4.1.sites.chr{chr}.vcf.bgz.tbi",
+            [
+                "resources/gnomad/{gnomad_type}/gnomad.{gnomad_type}.v4.1.sites.chr{chr}.vcf.bgz",
+                "resources/gnomad/{gnomad_type}/gnomad.{gnomad_type}.v4.1.sites.chr{chr}.vcf.bgz.tbi",
+            ],
             gnomad_type=GNOMAD_TYPES,
             chr=CHROMOSOMES_MAIN,
         ),
