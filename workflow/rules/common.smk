@@ -6,6 +6,7 @@ import pandas as pd
 import sys
 
 samples_df = pd.read_csv("config/samples.tsv", sep="\t")
+SAMPLE_GNOMAD_POP = dict(zip(samples_df['sample'], samples_df['gnomad_pop']))
 
 
 def get_active_samples():
@@ -193,6 +194,15 @@ def get_required_sorted_ms_beds():
 
     return beds
 
+# ============================================
+# GnomAD Population and Type Functions
+# ============================================
+
+def get_gnomad_population(wildcards):
+    """Get gnomAD population code for this sample"""
+    return SAMPLE_GNOMAD_POP.get(wildcards.sample)
+
+# ============================================
 
 # Print summary
 print("=" * 60)
