@@ -128,3 +128,18 @@ Sort VCF lexicographically and preserve header.
         extra="-header",
     wrapper:
         "v8.1.1/bio/bedtools/sort"
+
+
+rule compress_and_index_sample_vcf:
+    input:
+        "results/calls/{sample}.vcf"
+    output:
+        vcf="results/calls/{sample}.vcf.gz",
+        tbi="results/calls/{sample}.vcf.gz.tbi"
+    conda:
+        "../envs/vcf_compress_index.yaml"
+    shell:
+        """
+        bgzip -c {input} > {output.vcf}
+        bcftools index {output.vcf}
+        """
