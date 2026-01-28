@@ -1,0 +1,12 @@
+# ============================================
+# VCF Compress and Index Environment
+# ============================================
+
+
+channels:
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  - bcftools =1.23
+  - htslib =1.23
