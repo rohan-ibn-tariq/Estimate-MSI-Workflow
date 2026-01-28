@@ -48,6 +48,11 @@ def get_process_type(wildcards):
     sample_row = samples_df[samples_df["sample"] == wildcards.sample].iloc[0]
     return sample_row["process_as"]
 
+def get_sample_gender(wildcards):
+    """Get gender from samples.tsv"""
+    sample_row = samples_df[samples_df["sample"] == wildcards.sample].iloc[0]
+    return sample_row["gender"].lower()
+
 
 def get_microsatellite_bed(wildcards):
     """
