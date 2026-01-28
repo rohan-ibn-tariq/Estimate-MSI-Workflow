@@ -25,6 +25,7 @@ include: "rules/msisensor.smk"
 include: "rules/coverage.smk"
 include: "rules/msisensor-pro_scan_plus_varlociraptor.smk"
 include: "rules/msisensor-pro_baseline_plus_varlociraptor.smk"
+include: "rules/gnomad.smk"
 
 
 rule all:
