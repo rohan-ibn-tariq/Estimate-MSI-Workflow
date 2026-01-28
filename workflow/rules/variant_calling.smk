@@ -135,7 +135,7 @@ rule compress_and_index_sample_vcf:
         "results/calls/{sample}.vcf"
     output:
         vcf="results/calls/{sample}.vcf.gz",
-        tbi="results/calls/{sample}.vcf.gz.tbi"
+        tbi="results/calls/{sample}.vcf.gz.csi"
     conda:
         "../envs/vcf_compress_index.yaml"
     shell:
