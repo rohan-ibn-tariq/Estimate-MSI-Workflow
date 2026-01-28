@@ -62,6 +62,15 @@ rule all:
             "results/calls/{sample}.vcf",
             sample=get_active_samples(),
         ),
+        # Compressed and indexed VCF
+        expand(
+            "results/calls/{sample}.vcf.gz",
+            sample=get_active_samples(),
+        ),
+        expand(
+            "results/calls/{sample}.vcf.gz.csi",
+            sample=get_active_samples(),
+        ),
         # Microsatellites (dynamic - only creates needed BEDs)
         get_required_ms_beds(),
         # MSI estimation outputs
