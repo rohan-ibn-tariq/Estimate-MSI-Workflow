@@ -37,7 +37,7 @@ rule download_gnomad_chr:
     shell:
         """
         mkdir -p $(dirname {output.vcf})
-        wget -q -O {output.vcf} {params.url}
+        wget -q -O {output.vcf} {params.url} > {log} 2>&1
         """
 
 
@@ -51,7 +51,7 @@ rule download_gnomad_mt:
     shell:
         """
         mkdir -p $(dirname {output.vcf})
-        wget -q -O {output.vcf} {params.url}
+        wget -q -O {output.vcf} {params.url} > {log} 2>&1
         """
 
 

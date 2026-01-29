@@ -142,6 +142,6 @@ rule compress_and_index_sample_vcf:
         "logs/vcf_compress/{sample}.log"
     shell:
         """
-        bgzip -c {input} > {output.vcf}
-        bcftools index {output.vcf}
+        bgzip -c {input} > {output.vcf} > {log} 2>&1
+        bcftools index {output.vcf} >> {log} 2>&1
         """
