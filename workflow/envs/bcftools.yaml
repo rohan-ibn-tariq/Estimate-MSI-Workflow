@@ -1,0 +1,11 @@
+# ============================================
+# Bcftools Environment
+# ============================================
+
+
+channels:
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  - bcftools =1.23
