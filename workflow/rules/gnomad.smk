@@ -38,7 +38,6 @@ rule download_gnomad_chr:
         """
         mkdir -p $(dirname {output.vcf})
         wget -q -O {output.vcf} {params.url}
-        wget -q -O {output.tbi} {params.url}.tbi
         """
 
 
@@ -53,7 +52,6 @@ rule download_gnomad_mt:
         """
         mkdir -p $(dirname {output.vcf})
         wget -q -O {output.vcf} {params.url}
-        wget -q -O {output.tbi} {params.url}.tbi
         """
 
 
