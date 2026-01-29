@@ -138,6 +138,8 @@ rule compress_and_index_sample_vcf:
         tbi="results/calls/{sample}.vcf.gz.csi"
     conda:
         "../envs/vcf_compress_index.yaml"
+    log:
+        "logs/vcf_compress/{sample}.log"
     shell:
         """
         bgzip -c {input} > {output.vcf}
