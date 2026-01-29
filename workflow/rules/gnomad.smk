@@ -52,3 +52,14 @@ rule download_gnomad_mt:
         wget -q -O {output.vcf} {params.url}
         wget -q -O {output.tbi} {params.url}.tbi
         """
+
+
+rule download_all_gnomad:
+    """Download all needed gnomAD files"""
+    input:
+        expand(
+            "resources/gnomad/{gnomad_type}/gnomad.{gnomad_type}.v4.1.sites.chr{chr}.vcf.bgz",
+            gnomad_type=GNOMAD_TYPES,
+            chr=CHROMOSOMES_MAIN
+        ),
+        "resources/gnomad/genomes/gnomad.genomes.v3.1.sites.chrM.vcf.bgz"
