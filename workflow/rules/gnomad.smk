@@ -64,3 +64,41 @@ rule download_all_gnomad:
             chr=CHROMOSOMES_MAIN
         ),
         "resources/gnomad/genomes/gnomad.genomes.v3.1.sites.chrM.vcf.bgz"
+
+
+rule rename_gnomad_chr_main:
+    input:
+        vcf="resources/gnomad/{gnomad_type}/gnomad.{gnomad_type}.v4.1.sites.chr{chr}.vcf.bgz",
+        rename_map="config/gnomad_chr_rename.txt"
+    output:
+        vcf="resources/gnomad/{gnomad_type}/gnomad.{gnomad_type}.v4.1.sites.{chr}.renamed.vcf.gz",
+        csi="resources/gnomad/{gnomad_type}/gnomad.{gnomad_type}.v4.1.sites.{chr}.renamed.vcf.gz.csi"
+    log:
+        "logs/gnomad/rename_{gnomad_type}_chr{chr}.log"
+    conda:
+        "../envs/bcftools.yaml"
+    shell:
+        """
+        bcftools annotate --rename-chrs {input.rename_map} {input.vcf} -Oz -o {output.vcf} > {log} 2>&1
+        bcftools index {output.vcf} >> {log} 2>&1
+        rm {input.vcf}
+        """
+
+
+rule rename_gnomad_mt:
+    input:
+        vcf="resources/gnomad/genomes/gnomad.genomes.v3.1.sites.chrM.vcf.bgz",
+        rename_map="config/gnomad_chr_rename.txt"
+    output:
+        vcf="resources/gnomad/genomes/gnomad.genomes.v3.1.sites.MT.renamed.vcf.gz",
+        csi="resources/gnomad/genomes/gnomad.genomes.v3.1.sites.MT.renamed.vcf.gz.csi"
+    log:
+        "logs/gnomad/rename_genomes_chrM.log"
+    conda:
+        "../envs/bcftools.yaml"
+    shell:
+        """
+        bcftools annotate --rename-chrs {input.rename_map} {input.vcf} -Oz -o {output.vcf} > {log} 2>&1
+        bcftools index {output.vcf} >> {log} 2>&1
+        rm {input.vcf}
+        """
