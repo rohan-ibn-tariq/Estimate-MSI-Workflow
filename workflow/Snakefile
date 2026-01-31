@@ -141,7 +141,7 @@ rule all:
             [
                 "resources/gnomad/{gnomad_type}/gnomad.{gnomad_type}.v4.1.sites.{chr}.renamed.vcf.gz",
                 "resources/gnomad/{gnomad_type}/gnomad.{gnomad_type}.v4.1.sites.{chr}.renamed.vcf.gz.csi",
-            ]
+            ],
             gnomad_type=GNOMAD_TYPES,
             chr=CHROMOSOMES_MAIN,
         ),
