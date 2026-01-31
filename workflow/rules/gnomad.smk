@@ -81,7 +81,6 @@ rule rename_gnomad_chr_main:
         """
         bcftools annotate --rename-chrs {input.rename_map} {input.vcf} -Oz -o {output.vcf} > {log} 2>&1
         bcftools index {output.vcf} >> {log} 2>&1
-        rm {input.vcf}
         """
 
 
@@ -100,5 +99,4 @@ rule rename_gnomad_mt:
         """
         bcftools annotate --rename-chrs {input.rename_map} {input.vcf} -Oz -o {output.vcf} > {log} 2>&1
         bcftools index {output.vcf} >> {log} 2>&1
-        rm {input.vcf}
         """
