@@ -147,7 +147,7 @@ rule all:
         ),
         "resources/gnomad/genomes/gnomad.genomes.v3.1.sites.MT.renamed.vcf.gz",
         # gnomAD annotated VCFs
-        # expand(
-        #     "results/calls/{sample}_annotated.vcf.gz",
-        #     sample=get_active_samples(),
-        # ),
+        expand(
+            "results/calls/{sample}_annotated.vcf.gz",
+            sample=get_active_samples(),
+        ),
