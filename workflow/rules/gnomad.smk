@@ -155,7 +155,7 @@ rule annotate_sample_with_gnomad:
         bcftools index working.vcf.gz 2>> ../../{log}
 
         # Annotate autosomes (1-22) with general population AF
-        for chr in {{1..2}}; do
+        for chr in {{1..22}}; do
             echo "Annotating chr$chr..." >> ../../{log}
 
             # Download gnomAD file for this chromosome
@@ -179,35 +179,35 @@ rule annotate_sample_with_gnomad:
         done
 
         # Annotate sex chromosomes + MT
-        # for chr_info in "MT:genomes/gnomad.genomes.v3.1.sites.MT.renamed.vcf.gz:{params.population}" \
-        #                 "X:{params.gnomad_type}/gnomad.{params.gnomad_type}.v4.1.sites.X.renamed.vcf.gz:{params.population}${{SEX_SUFFIX}}" \
-        #                 "Y:{params.gnomad_type}/gnomad.{params.gnomad_type}.v4.1.sites.Y.renamed.vcf.gz:{params.population}${{SEX_SUFFIX}}"; do
+        for chr_info in "MT:genomes/gnomad.genomes.v3.1.sites.MT.renamed.vcf.gz:{params.population}" \
+                        "X:{params.gnomad_type}/gnomad.{params.gnomad_type}.v4.1.sites.X.renamed.vcf.gz:{params.population}${{SEX_SUFFIX}}" \
+                        "Y:{params.gnomad_type}/gnomad.{params.gnomad_type}.v4.1.sites.Y.renamed.vcf.gz:{params.population}${{SEX_SUFFIX}}"; do
 
-        #     chr=$(echo $chr_info | cut -d: -f1)
-        #     gnomad_path=$(echo $chr_info | cut -d: -f2)
-        #     af_field=$(echo $chr_info | cut -d: -f3)
+            chr=$(echo $chr_info | cut -d: -f1)
+            gnomad_path=$(echo $chr_info | cut -d: -f2)
+            af_field=$(echo $chr_info | cut -d: -f3)
 
-        #     echo "Annotating $chr..." >> ../../{log}
+            echo "Annotating $chr..." >> ../../{log}
 
-        #     # Download gnomAD file
-        #     s5cmd cp {params.s3_prefix}/${{gnomad_path}} gnomad_${{chr}}.vcf.gz 2>> ../../{log}
-        #     s5cmd cp {params.s3_prefix}/${{gnomad_path}}.csi gnomad_${{chr}}.vcf.gz.csi 2>> ../../{log}
+            # Download gnomAD file
+            s5cmd cp {params.s3_prefix}/${{gnomad_path}} gnomad_${{chr}}.vcf.gz 2>> ../../{log}
+            s5cmd cp {params.s3_prefix}/${{gnomad_path}}.csi gnomad_${{chr}}.vcf.gz.csi 2>> ../../{log}
 
-        #     # Annotate
-        #     bcftools annotate \
-        #       -a gnomad_${{chr}}.vcf.gz \
-        #       -c INFO/POPULATION_AF:=INFO/${{af_field}} \
-        #       working.vcf.gz \
-        #       -Oz -o working_new.vcf.gz 2>> ../../{log}
+            # Annotate
+            bcftools annotate \
+              -a gnomad_${{chr}}.vcf.gz \
+              -c INFO/POPULATION_AF:=INFO/${{af_field}} \
+              working.vcf.gz \
+              -Oz -o working_new.vcf.gz 2>> ../../{log}
 
-        #     # Replace working file
-        #     rm working.vcf.gz working.vcf.gz.csi
-        #     mv working_new.vcf.gz working.vcf.gz
-        #     bcftools index working.vcf.gz 2>> ../../{log}
+            # Replace working file
+            rm working.vcf.gz working.vcf.gz.csi
+            mv working_new.vcf.gz working.vcf.gz
+            bcftools index working.vcf.gz 2>> ../../{log}
 
-        #     # Delete gnomAD file
-        #     rm gnomad_${{chr}}.vcf.gz gnomad_${{chr}}.vcf.gz.csi
-        # done
+            # Delete gnomAD file
+            rm gnomad_${{chr}}.vcf.gz gnomad_${{chr}}.vcf.gz.csi
+        done
 
         # Move final output to destination
         mv working.vcf.gz ../../{output.vcf}
