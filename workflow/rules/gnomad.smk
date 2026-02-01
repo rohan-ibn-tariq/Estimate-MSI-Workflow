@@ -111,7 +111,7 @@ rule annotate_sample_with_gnomad:
         vcf="results/calls/{sample}_annotated.vcf.gz",
         csi="results/calls/{sample}_annotated.vcf.gz.csi"
     params:
-        pop=lambda wildcards: get_gnomad_population(wildcards),
+        population=lambda wildcards: get_gnomad_population(wildcards),
         gender=lambda wildcards: get_sample_gender(wildcards),
         gnomad_type=lambda wildcards: "exomes" if get_process_type(wildcards) == "WXS" else "genomes",
         s3_prefix="s3://prefix-path/resources/gnomad", # Replace with actual S3 path
@@ -132,7 +132,7 @@ rule annotate_sample_with_gnomad:
         fi
 
         echo "Starting gnomAD annotation for {wildcards.sample}..." > {log}
-        echo "Population: {params.pop}" >> {log}
+        echo "Population: {params.population}" >> {log}
         echo "Gender: {params.gender}" >> {log}
         echo "Type: {params.gnomad_type}" >> {log}
 
@@ -156,7 +156,7 @@ rule annotate_sample_with_gnomad:
             bcftools annotate \
               -r $chr \
               -a gnomad_chr${{chr}}.vcf.gz \
-              -c INFO/POPULATION_AF:=INFO/{params.pop} \
+              -c INFO/POPULATION_AF:=INFO/{params.population} \
               -h <(echo '##INFO=<ID=POPULATION_AF,Number=A,Type=Float,Description="gnomAD population allele frequency">') \
               working.vcf.gz \
               -Oz -o working_new.vcf.gz 2>> ../../{log}
@@ -171,9 +171,9 @@ rule annotate_sample_with_gnomad:
         done
 
         # Annotate sex chromosomes + MT
-        for chr_info in "MT:genomes/gnomad.genomes.v3.1.sites.MT.renamed.vcf.gz:{params.pop}" \
-                        "X:{params.gnomad_type}/gnomad.{params.gnomad_type}.v4.1.sites.X.renamed.vcf.gz:{params.pop}${{SEX_SUFFIX}}" \
-                        "Y:{params.gnomad_type}/gnomad.{params.gnomad_type}.v4.1.sites.Y.renamed.vcf.gz:{params.pop}${{SEX_SUFFIX}}"; do
+        for chr_info in "MT:genomes/gnomad.genomes.v3.1.sites.MT.renamed.vcf.gz:{params.population}" \
+                        "X:{params.gnomad_type}/gnomad.{params.gnomad_type}.v4.1.sites.X.renamed.vcf.gz:{params.population}${{SEX_SUFFIX}}" \
+                        "Y:{params.gnomad_type}/gnomad.{params.gnomad_type}.v4.1.sites.Y.renamed.vcf.gz:{params.population}${{SEX_SUFFIX}}"; do
 
             chr=$(echo $chr_info | cut -d: -f1)
             gnomad_path=$(echo $chr_info | cut -d: -f2)
