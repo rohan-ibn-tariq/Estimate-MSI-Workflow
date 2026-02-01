@@ -1,0 +1,12 @@
+# ============================================
+# Gnomad Annotation Environment
+# ============================================
+
+
+channels:
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  - bcftools =1.23
+  - s5cmd =2.3.0
