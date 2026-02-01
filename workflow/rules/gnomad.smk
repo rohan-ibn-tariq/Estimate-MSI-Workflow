@@ -8,6 +8,8 @@
 CHROMOSOMES_MAIN = [str(i) for i in range(1, 23)] + ["X", "Y"]
 CHROMOSOMES_ALL = [str(i) for i in range(1, 23)] + ["MT", "X", "Y"]
 
+ruleorder: annotate_sample_with_gnomad > compress_and_index_sample_vcf
+
 def get_gnomad_types_needed():
     """Determine if we need exomes, genomes, or both"""
     active_samples = get_active_samples()

@@ -136,6 +136,8 @@ rule compress_and_index_sample_vcf:
     output:
         vcf="results/calls/{sample}.vcf.gz",
         tbi="results/calls/{sample}.vcf.gz.csi"
+    wildcard_constraints:
+        sample="(?!.*_annotated$).*"
     conda:
         "../envs/vcf_compress_index.yaml"
     log:
