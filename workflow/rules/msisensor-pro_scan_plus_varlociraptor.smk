@@ -39,11 +39,12 @@ rule convert_msisensor_to_bed:
         """
         # awk fields explanation:
         # $1 = chromosome
-        # $2-1 = chromStart (0-based)
-        # $2+($3*$4)-1 = chromEnd (exclusive)
+        # Note: MSIsensor-pro output is 0-based and also BED format is 0-based, so we keep $2 as is for chromStart.
+        # $2 = chromStart (0-based)
+        # $2+($3*$4) = chromEnd (exclusive)
         # $4"x"$5 = name (repeatnumxMotif)
         
-        awk 'NR > 1 {{print $1 "\t" ($2-1) "\t" ($2 + ($3 * $4) - 1) "\t" $4 "x" $5}}' {input.msisensor_sites} \
+        awk 'NR > 1 {{print $1 "\t" $2 "\t" ($2 + ($3 * $4)) "\t" $4 "x" $5}}' {input.msisensor_sites} \
         | bedtools sort -i - > {output.msisensor_bed} 2> {log}
         """
 
