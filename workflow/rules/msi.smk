@@ -14,7 +14,7 @@ Requirements:
 - Dynamic: Uses WXS or WGS BED based on sample type
 """
     input:
-        vcf="results/calls/{sample}.vcf",
+        vcf="results/calls/{sample}_annotated.vcf.gz",
         bed=lambda wildcards: get_microsatellite_bed(wildcards),
     output:
         pseudotime_data="results/msi/{sample}/pseudotime.tsv",
