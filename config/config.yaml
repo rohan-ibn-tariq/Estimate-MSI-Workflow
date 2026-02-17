@@ -38,7 +38,8 @@ msi:
   #   - Mononucleotide repeats: >= 5 repeats (e.g., AAAAA)
   #   - Dinucleotide repeats: >= 5 repeats (e.g., CAGCAGCAGCAGCAG)
   #   - etc.
-  min_repeats: [5, 3, 3, 3, 3, 3]
+  min_repeats: [8, 5, 5, 5, 5, 5] # Match MSIsensor-pro scan defaults
+  max_homopolymer: 50 # Match MSIsensor-pro scan -m 50
 
 # ---------------------------------------------
 # Variant Calling
