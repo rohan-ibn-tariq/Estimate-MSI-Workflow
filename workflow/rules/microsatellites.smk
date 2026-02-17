@@ -10,10 +10,15 @@ Find all tandem repeats (microsatellites) in reference genome.
 Detects mono- through hexanucleotide repeats.
 Runs once for entire genome (used by both WXS and WGS).
 
+Matches MSIsensor-pro scan defaults:
+    -l 8: mononucleotide min 8 bases  -> mono=8
+    -r 5: di-hexa min 5 repeats       -> di/tri/tetra/penta/hexa=5
+    -s 6: max motif length = 6        -> findstr covers mono-hexa
+
 Parameters:
-    min_repeats: [5,3,3,3,3,3]
-    - Mononucleotide: 5 repeats (e.g., AAAAA)
-    - Di/tri/tetra/penta/hexa: 3 repeats each
+    min_repeats: [8,5,5,5,5,5]
+    - Mononucleotide: 8 repeats (e.g., AAAAAAAA)
+    - Di/tri/tetra/penta/hexa: 5 repeats each
 """
     input:
         fasta="resources/genome/genome.fasta",
