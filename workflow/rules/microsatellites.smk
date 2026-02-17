@@ -44,6 +44,51 @@ Parameters:
         """
 
 
+# rule pytrf_filter_homopolymers:
+#     """
+# Filter homopolymers exceeding maximum length threshold.
+
+# Matches MSIsensor-pro scan -m 50 (maximal homopolymer size).
+
+# PyTRF CSV columns (NO header):
+#     1. Chromosome
+#     2. Start (1-based)
+#     3. End (1-based)
+#     4. Motif
+#     5. Motif length
+#     6. Repeat number
+#     7. Repeat length
+
+# Filter logic:
+#     - For mononucleotides (motif_length == 1):
+#         Keep only if repeat_length <= max_homopolymer
+#     - For di-hexa (motif_length >= 2):
+#         Keep all (no maximum defined in MSIsensor-pro)
+# """
+#     input:
+#         csv="resources/microsatellites/all_repeats.csv",
+#     output:
+#         csv="resources/microsatellites/all_repeats_filtered.csv",
+#     params:
+#         max_homopolymer=config["msi"]["max_homopolymer"],
+#     log:
+#         "logs/microsatellites/pytrf_filter.log",
+#     threads: config["threads"]["single"]
+#     shell:
+#         """
+#         awk -F',' '
+#             $5 == 1 && $7 > {params.max_homopolymer} {{
+#                 next
+#             }}
+#             {{
+#                 print
+#             }}
+#         ' {input.csv} \
+#         > {output.csv} \
+#         2> {log}
+#         """
+
+
 rule pytrf_to_bed:
     """
 Convert PyTRF CSV output to UCSC BED Scheme
